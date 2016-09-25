@@ -4,3 +4,40 @@ author: "Gytis Semėnas"
 date: "25 September 2016"
 output: html_document
 ---
+knitr::opts_chunk$set(echo = TRUE)
+library('prob')
+#Tarkime, kad ridenami trys taisyklingi standartiniai lošimo kauliukai. Fiksuojama iškritusių akučių suma, pažymėkime šį atsitiktinį dydį S.
+#Atlikite Monte-Carlo modeliavimą sugeneruodami S atsitiktinio dydžio nepriklausomas realizacijas S1, S2, …, Sn. Čia n=10^5.
+n <- 10^5
+S <- replicate(n, sum(sample(1:6, 3, replace = TRUE)))
+head(S, 15)
+#Aukščiau pateikta 15 pirmų atsitiktinio dydžio S realizacijų.
+#Raskite teorinį S skirstinį, t.y. kiekvienai galimai S reikšmei raskite pasirodymo tikimybę.
+St <- rolldie(3, nsides = 6, makespace = TRUE)
+St <- addrv(St, sum = X1 + X2 + X3)
+S_teor <- marginal(St, vars="sum")
+S_teor
+#Šio kodo pavyzdį radome knygoje Kerns, G. Jay. 2011. “Introduction to Probability and Statistics Using R.”.
+#Iš sugeneruotos imties, padarykite santykinių dažnių lentelę ir gautas reikšmes palyginkite su teorinėmis tikimybėmis. Palyginimui pateikite grafiką ir lentelę, taip, kad būtų patogu lyginti gautus rezultatus.
+cbind(as.data.frame(table(S)/n), S_teor)
+#Teorinės tikimybės pateiktos dešinėje.
+plot(table(S)/n, xlab="Suma", ylab="Tikimybė")
+points(S_teor, col=2)
+#Raudoni taškai žymi teorines tikimybes.
+#Suskaičiuokite teorinį S vidurkį ir dispersiją. Padarykite grafikus, kuriuose matytųsi, kaip didėjant n minėtų charakteristikų įvertiniai artėja į teorines reikšmes.
+#Teorinis vidurkis:
+ES <- sum(S_teor$probs * S_teor$sum)
+ES
+#Teorinė dispersija:
+varS <- sum(S_teor$probs * (S_teor$sum-ES)^2)
+varS
+plot(cumsum(S)/1:n, type="l", xlab="n", ylab = "S / n", main="Vidurkio artėjimas į teorinį")
+abline(h=ES, col=2)
+a=S*0
+for(i in 1:10000){
+  a[i]=var(S[1:i])
+}
+
+plot(a[1:10000], type="l", xlab="n", ylab="varS", main="Dispersijos artėjimas į teorinę")
+abline(h=varS, col=2)
+#Naudojausi Simonos, Agnės, Orintos ir Sandros darbu
