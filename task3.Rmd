@@ -1,8 +1,0 @@
----
-title: "task3"
-author: "Gytis Semėnas"
-date: "22 September 2016"
-output: html_document
----
-test <- as.integer(runif(10000, min = 0, max = (6 + 1)))
-hist(test)
