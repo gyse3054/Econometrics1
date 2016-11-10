@@ -1,0 +1,45 @@
+---
+title: "task 15"
+author: "Gytis Semėnas"
+date: "10 November 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+Pirmiausia nuskaitome duomenų masyvą:
+```{r}
+tf = read.csv('C:/Users/gytisse/Desktop/Econometrics1/Econometrics1/task6/data.csv',stringsAsFactors=FALSE)
+```
+1.Įvertinti paprastosios tiesinės regresijos modelį. Pateikti modelio summary ir pakomentuoti ką reiškia gauti skaičiai. Kaip interpretuoti gautus rezultatus?
+
+Su funkcija lm įvertinsiu tiesinės regresijos modelį pateiktiems duomenims bei pateiksiu modelio summary:
+```{r}
+data<- lm(y ~ x, data = tf)
+summary(data)
+```
+summary reikšmės:
+
+Residuals - skirtumas tarp stebimų duomenų ir prognozuojamų duomenų. Parodo kiek taškai yra nutolę nuo regresijos tiesės.
+Coefficients
+
+Estimate Std. - β0 ir β1 reikšmės, kai regresijos tiesė aprašoma pavidalu µ(x) = β0 + β1*x
+Residual standard error - stebimų duomenų standartinio nuokrypio prognozės.
+
+2.Padarykite modelio prognozes taškuose $0, 0.3, 0.5$.
+```{r}
+new1 <- c(0, 0.3, 0.5)
+new2 <- predict(data, newdata = data.frame(x = new1))
+new2
+```
+3.Išbrėžkite kintamųjų sklaidos diagramą kartu su tiesinės regresijos tiese ir naujomis prognozėmis. Grafiką pateikite su pilna legena, kurioje būtų nurodyti visi žymėjimai.
+```{r}
+plot(x ~ y, data = tf,  pch = 16)
+abline(coef(data), col = 2)
+points(new1, new2, col=3, pch=19)
+legend("topleft", legend = c("Regresijos tiesė", "prognozės", "stebėjimai"), pch = c(NA, 16, 19), col = c(2, 3, 1), lty = c(1, NA, NA))
+```
+4.Pakomentuokite ar tinkamas šis modelis duotiems duomenims. Ar galite pateikti tobulinimo pasiūlymų?
+Šis modelis nėra tinkamas duotiems duomenims, nes gautas skaičius nėra arti 1 .
+Atlikdamas užduotį naudojausi Raigardo pagalba.
