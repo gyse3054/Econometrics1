@@ -1,0 +1,50 @@
+---
+title: "task11"
+author: "Gytis Semėnas"
+date: "11 November 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Pakete datasets yra duomenų masyvas longley.
+Iš šio kintamųjų padarykite tiesinę regresiją, kur prognozuojamas kintamasis būtų GNP, o regresosius Employed. Jums reikia:
+```{r}
+head(longley)  #duomenų masyvas.
+```
+1.Įvertinti paprastosios tiesinės regresijos modelį. Pateikti modelio summary ir pakomentuoti ką reiškia gauti skaičiai. Kaip interpretuoti gautus rezultatus?
+
+Su funkcija lm įvertiname tiesinės regresijos modelį pateiktiems duomenims ir pateikiame modelio summary:
+```{r}
+x <- longley$Employed
+y <- longley$GNP
+mod <- lm(y~x)
+summary(mod) 
+```
+Čia pateikti modelio Residuals rodo paklaidą, kiek prognozuojami duomenys gali skirtis nuo stebimų duomenų, t.y. kaip duomenys yra išsibarstę apie regresijos tiesę.
+
+Coefficients rodo lygties y = β0 + β1x + ϵ koeficientų β0 ir β1 įverčius (β0=-1430,482, β1=27,836). Taip pat pateiktas šių įverčių standartinis nuokrypis (Std. Error) bei Stjudento kriterijaus statistikos t reikšmė (t value) ir tikimybė Pr(>|t|), rodanti su kokiu reikšmingumo lygmeniu šie įverčiai yra reikšmingi.
+
+Residual standard error rodo stebimų duomenų nuokrypį nuo įvertinto jų modelio.
+
+Multiple R-squared yra modelio tinkamumo matas. Kuo R^2 arčiau 1, tuo modelis geriau įvertina duomenis.
+
+2.Padarykite modelio prognozes taškuose 62,65,68.
+Susikuriame vektorių newx, kuriame nurodome šiuos taškus ir su funkcija predict pagal gautą tiesinės regresijos modelį surandame y (GNP) prognozes šiuose taškuose.
+```{r}
+newx <- c(62, 65, 68)
+newy = predict(mod, newdata=data.frame(x=newx))
+newy
+```
+3.Išbrėžkite kintamųjų sklaidos diagramą kartu su tiesinės regresijos tiese ir naujomis prognozėmis. Grafiką pateikite su pilna legenda, kurioje būtų nurodyti visi žymėjimai.
+```{r}
+plot(x, y, xlab='Employed', ylab='GNP')
+abline(mod, col=2)
+points(newx, newy, col=3, pch=19)
+grid()
+legend("topleft", c("Duomenys","Regresijos  tiesė", "Prognozės"), lty=c(0,1,0), pch=c(1,NA,19), col=c(1,2,3))
+```
+
+Pasinaudojau Simonos darbu.
