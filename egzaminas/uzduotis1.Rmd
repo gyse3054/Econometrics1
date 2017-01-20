@@ -1,0 +1,30 @@
+---
+title: "Untitled"
+author: "Gytis Semėnas"
+date: "20 January 2017"
+output: html_document
+---
+
+Užduotis 1 
+a)
+```{r}
+set.seed(1234567890)
+x <- rnorm(5000)
+mean(x)
+sd(x)
+```
+
+b)
+```{r}
+new <- x[(x>mean(x)-3*sd(x))&(mean(x) + 3*sd(x)<x)]
+new #reiksmes, kurios nepakliuna i intervala.
+
+
+```
+c)
+```{r}
+xnew <- setdiff(x, new) # pasaliname reiksmes, kurios nepakliuna i intervala.
+hist(xnew, main = 'Atnaujinto x histograma')
+
+```
+

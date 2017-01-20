@@ -1,0 +1,57 @@
+---
+title: "Untitled"
+author: "Gytis Semėnas"
+date: "20 January 2017"
+output: html_document
+---
+
+3 Užduotis
+1.a)
+```{r}
+data <- read.csv("https://raw.githubusercontent.com/1vbutkus/Econometrics1/master/Egzaminas/data.csv", header = TRUE,sep=";",dec=".",skip=7)
+head(data)
+class(data)
+typeof(data)
+
+```
+
+b)
+```{r}
+NAs = rowSums(is.na(data))                                        # Panaikina eilutes, kuriose yra NA
+fixed_data = data[NAs == 0,]                         # Duomenys be NA
+sum(NAs)                                             # Kiek eilučių buvo su NA(t.y. kiek panaikinom)
+nrow(fixed_data)                                     # Kiek eilučių liko po NA pašalinimo
+
+sapply(df, class)                                    # Parodo visų elementų klases. Reikia įsitikinti, ar visi duomenų tipai yra tokie, kokių reikia
+which(data$kaina%in%'MISSING') # tikrinu kuriose eilutese yra MISSING
+which(data$rida%in%'MISSING')
+which(data$amzius%in%'MISSING')
+which(data$galia%in%'MISSING')
+which(data$markesKodas%in%'MISSING')
+```
+
+c)
+```{r}
+plot(fixed_data)
+summary(fixed_data)
+```
+d)
+```{r}
+trainSet_ind = sample(1:nrow(fixed_data), round(nrow(fixed_data)*0.8)) # Atsitiktinių indeksų aibė (80% duomenų)
+testSet_ind = setdiff(1:nrow(fixed_data), trainSet_ind)                # Atsitiktinių indeksų aibė, (20% duomenų)
+trainSet = fixed_data[trainSet_ind,]                                   # 80%
+testSet = fixed_data[testSet_ind,]
+```
+
+2.a)
+```{r}
+head(fixed_data, 1)
+modelis = lm( kaina ~ rida + amzius + galia + factor(markesKodas), trainSet )
+
+
+```
+
+
+
+
+

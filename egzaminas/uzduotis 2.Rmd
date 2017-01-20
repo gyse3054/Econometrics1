@@ -1,0 +1,52 @@
+---
+title: "Untitled"
+author: "Gytis Semėnas"
+date: "20 January 2017"
+output: html_document
+---
+```{r}
+
+```
+Užduotis 2
+a)
+```{r}
+x1 <-rnorm(1000,mean = 3,sqrt(2))
+x2 <-rnorm(1000,mean = -1,sqrt(3))
+x = x1 + x2
+#x teorinis skirstinys yra x(2,5)
+y<- rnorm(1000, mean = 2, sd = sqrt(2) + sqrt(3))
+d <- density(y)
+plot(d, main = 'Tankio grafikas') 
+```
+
+b)
+```{r}
+library('prob')
+n = 10000
+#teorinis skirstinys:
+imtis <- rnorm(n, mean = 2, sd = sqrt(3) + sqrt(2))
+summary(imtis)
+sd(imtis)
+a <- density(imtis)
+plot(a , main = 'Tankio funkcija')
+
+
+```
+```{r}
+#empirinis skirstinys:
+
+```
+
+d)
+```{r}
+pnorm(2, mean = 2, sd = sqrt(2) + sqrt(3)) # teorine tikimybe
+```
+
+
+
+e)
+```{r}
+sum(x>2)/length(x) # tikimybe naudojantis Monte Carlo metodu
+```
+
+
